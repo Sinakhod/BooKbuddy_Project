@@ -19,41 +19,51 @@ namespace BookBuddyProject2._0
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string enteredUsername = txtUsername.Text.Trim();
-            string enteredPassword = txtpassword.Text;
+            string enteredUsername = txtUsernameAdminLogin.Text.Trim();
+            string enteredPassword = txtPasswordAdminLogin.Text;
 
-            if (enteredUsername == "" || enteredPassword == "")
+            //  Empty check
+            if (Validations.isEmpty(txtUsernameAdminLogin.Text , txtPasswordAdminLogin.Text))
             {
-                MessageBox.Show("Please enter both your username and password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtUsername.Focus();
+                MessageBox.Show("Please make sure the required fields are filled",
+                    "Fill in Empty Spaces!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Username check
+            if (!Validations.isValidUsername(txtUsernameAdminLogin.Text))
+            {
+                MessageBox.Show("Invalid Username. Username must be 9 digits followed by @mywsu.ac.za.",
+                    "Username Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Password strength check
+            if (!Validations.IsValidPassword(txtPasswordAdminLogin.Text))
+            {
+                MessageBox.Show("Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character(!).",
+                    "Password Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
 
-            if (!enteredUsername.EndsWith("@mywsu.ac.za"))
+            if (enteredUsername == UserCredentials.Username && enteredPassword == UserCredentials.Password)
             {
-                MessageBox.Show("Please use a valid WSU email address (e.g. user@mywsu.ac.za).", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtUsername.Clear();
-                txtpassword.Clear();
-                txtUsername.Focus();
-                return;
+                MessageBox.Show("You have logged in successfully!", "Successful!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                FrmAdminHomePage adminHomePage = new FrmAdminHomePage();
+                adminHomePage.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("INVALID DETAILS. Click Forgot Password / Click CREATE ACCOUNT ", "Login Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPasswordAdminLogin.Clear();
+                txtUsernameAdminLogin.Clear();
+                txtUsernameAdminLogin.Focus();
             }
 
 
-            if (enteredUsername != UserCredentials.Username && enteredPassword != UserCredentials.Password)
-            {
-                Login.SetUser(enteredUsername, enteredPassword);
-
-                MessageBox.Show("Please use a valid WSU email address (e.g. user@mywsu.ac.za).", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtUsername.Clear();
-                txtpassword.Clear();
-                txtUsername.Focus();
-                return;
-            }
-
-            MessageBox.Show("You have logged in successfully!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new FrmAdminHomePage().Show();
-            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -66,11 +76,11 @@ namespace BookBuddyProject2._0
         {
             if (chkShowPass.Checked)
             {
-                txtpassword.PasswordChar = '\0';
+                txtPasswordAdminLogin.PasswordChar = '\0';
             }
             else
             {
-                txtpassword.PasswordChar = '•';
+                txtPasswordAdminLogin.PasswordChar = '•';
             }
         }
 

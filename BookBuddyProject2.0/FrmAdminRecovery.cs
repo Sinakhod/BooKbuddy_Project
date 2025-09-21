@@ -19,49 +19,53 @@ namespace BookBuddyProject2._0
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string newPass = txtPassword.Text;
-            string confirmPass = txtComPass.Text;
-
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(confirmPass))
+            if (Validations.isEmpty(txtUsernameRecoAdmin.Text,txtComPassRecoAdmin.Text))
             {
-                MessageBox.Show("Please fill in all fields.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please fill in all fields.", "Empty TextBox!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (newPass != confirmPass)
+            if (!Validations.isMatch(txtPasswordRecoAdmin.Text,txtComPassRecoAdmin.Text))
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Passwords do not match.", "Password Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            UserCredentials.Username = txtUsername.Text.Trim();
-            UserCredentials.Password = txtPassword.Text;
-
-
-            if (txtUsername.Text.EndsWith("@mywsu.ac.za"))
+            if (!Validations.isValidUsername(txtUsernameRecoAdmin.Text))
             {
-                MessageBox.Show("Password successfully reset!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
-                new FrmAdminLogin().Show();
+                MessageBox.Show("Invalid username. Username should contain only contain 9 Digits.", "Username Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
             }
-            else
+
+            if (!Validations.IsValidPassword(txtPasswordRecoAdmin.Text))
             {
-                MessageBox.Show("Username incorrect.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 special character.",
+                   "Password Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            MessageBox.Show("Password reset!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            FrmAdminLogin LoginAdminHome = new FrmAdminLogin();
+
+            UserCredentials.SetCredentials(txtUsernameRecoAdmin.Text,txtPasswordRecoAdmin.Text);
+
+            LoginAdminHome.Show();
+            this.Hide();
         }
 
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
         {
             if (chkShowPass.Checked)
             {
-                txtPassword.PasswordChar = '\0';
-                txtComPass.PasswordChar = '\0';
+                txtPasswordRecoAdmin.PasswordChar = '\0';
+                txtComPassRecoAdmin.PasswordChar = '\0';
             }
             else
             {
-                txtPassword.PasswordChar = '•';
-                txtComPass.PasswordChar = '•';
+                txtPasswordRecoAdmin.PasswordChar = '•';
+                txtComPassRecoAdmin.PasswordChar = '•';
             }
         }
     }

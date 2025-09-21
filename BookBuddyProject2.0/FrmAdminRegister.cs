@@ -19,43 +19,63 @@ namespace BookBuddyProject2._0
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtUsername.Text == "" && txtPassword.Text == "" && txtComPass.Text == "")
+            //  Empty check
+            if (Validations.isEmpty(txtUsernameAdminReg.Text,txtPasswordAdminReg.Text,txtComPassAdminReg.Text))
             {
-                MessageBox.Show("Username and Password fields are empty", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please make sure the required fields are filled",
+                    "Fill in Empty Spaces!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                
+                return;
             }
-            else if (txtPassword.Text != txtComPass.Text)
+
+            //  Username check
+            if (!Validations.isValidUsername(txtUsernameAdminReg.Text))
             {
-                MessageBox.Show("Password does not match, Please re-enter", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtPassword.Text = "";
-                txtComPass.Text = "";
-                txtPassword.Focus();
+                MessageBox.Show("Invalid Username. Username must be 9 digits followed by @mywsu.ac.za.",
+                    "Username Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else if (!txtUsername.Text.EndsWith("@mywsu.ac.za"))
+
+            // Password strength check
+            if (!Validations.IsValidPassword(txtPasswordAdminReg.Text))
             {
-                MessageBox.Show("Invalid Username or Password, Please try again", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUsername.Text = "";
-                txtPassword.Text = "";
-                txtUsername.Focus();
+                MessageBox.Show("Password must be at least 1 characters, include 1 uppercase, 1 number, and 1 special character(!).",
+                    "Password Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            //  Password match check
+            if (!Validations.isMatch(txtPasswordAdminReg.Text,txtComPassAdminReg.Text))
             {
-                MessageBox.Show("Your have Registered", "Registration Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                new FrmAdminHomePage().Show();
-                this.Hide();
+                MessageBox.Show("Passwords do not match.",
+                    "Password Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            //  Success
+            MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+          FrmAdminLogin loginAdmin = new FrmAdminLogin();
+
+
+            UserCredentials.SetCredentials(txtUsernameAdminReg.Text.Trim(),txtPasswordAdminReg.Text.Trim());
+
+            loginAdmin.Show();
+            this.Hide();
         }
 
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
         {
             if (chkShowPass.Checked)
             {
-                txtPassword.PasswordChar = '\0';
-                txtComPass.PasswordChar = '\0';
+                txtPasswordAdminReg.PasswordChar = '\0';
+                txtComPassAdminReg.PasswordChar = '\0';
             }
             else
             {
-                txtPassword.PasswordChar = '•';
-                txtComPass.PasswordChar = '•';
+                txtPasswordAdminReg.PasswordChar = '•';
+                txtComPassAdminReg.PasswordChar = '•';
             }
         }
 
@@ -63,6 +83,18 @@ namespace BookBuddyProject2._0
         {
             new FrmAdminLogin().Show();
             this.Hide(); 
+        }
+
+        private void btnClearReg_Click(object sender, EventArgs e)
+        {
+            txtUsernameAdminReg.Clear();
+            txtPasswordAdminReg.Clear();
+            txtComPassAdminReg.Clear();
+        }
+
+        private void FrmAdminRegister_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
