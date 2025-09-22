@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BookBuddyProject2._0
 {
@@ -17,62 +18,56 @@ namespace BookBuddyProject2._0
             }
             return false; // All fields are filled
         }
-        public static bool isMatch (string txtPassword, string txtComPass)             // Method to check if the password and confirm password fields match
+        public static bool isValidUsername(string Username)                   // Method to check if the username is valid 
+
         {
-            if (txtPassword != txtComPass)
-            {
+            if (string.IsNullOrWhiteSpace(Username))
                 return false;
+
+            foreach (char c in Username)
+            {
+                if (!(char.IsLetterOrDigit(c) || c == '_' || c == '@' || c == '!'))
+                    return false;
             }
+
             return true;
         }
-
-        public static bool isValidUsername(string txtUsername)                   // Method to check if the username is valid 
-
+        public static bool IsValidStudentEmail(string email)
         {
-            // Check if it ends with "@mywsu.ac.za"
             string domain = "@mywsu.ac.za";
-            if (!txtUsername.EndsWith(domain))
+            if (!email.EndsWith(domain))
                 return false;
 
-            // Extract the part before the domain
-            string studentNumber = txtUsername.Substring(0, txtUsername.Length - domain.Length);
+            string studentNumber = email.Substring(0, email.Length - domain.Length);
 
-            // Check if it is exactly 9 characters and all digits
             if (studentNumber.Length != 9 || !studentNumber.All(char.IsDigit))
                 return false;
 
             return true;
         }
-
-        public static bool IsValidPassword(params string[] passwords)
+        public static bool IsMatch(string txtPassword, string txtComPass)
         {
-            foreach (string password in passwords)
-            {
-                // Check length
-                if (password.Length < 8)
-                    return false;
-
-                bool hasUpper = false;
-                bool hasNumber = false;
-                bool hasSpecial = false;
-
-                foreach (char c in password)
-                {
-                    if (char.IsUpper(c))
-                        hasUpper = true;
-                    else if (char.IsDigit(c))
-                        hasNumber = true;
-                    else if (!char.IsLetterOrDigit(c))
-                        hasSpecial = true;
-                }
-
-                if (!(hasUpper && hasNumber && hasSpecial))
-                    return false;
-            }
-
-            return true;
+            return txtPassword == txtComPass;
         }
 
+
+
+        public static bool IsValidPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+                return false;
+
+            bool hasUpper = false, hasNumber = false, hasSpecial = false;
+
+            foreach (char c in password)
+            {
+                if (char.IsUpper(c)) hasUpper = true;
+                else if (char.IsDigit(c)) hasNumber = true;
+                else if (!char.IsLetterOrDigit(c)) hasSpecial = true;
+            }
+
+            return hasUpper && hasNumber && hasSpecial;
+        }
 
 
 

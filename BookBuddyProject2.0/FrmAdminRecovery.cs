@@ -25,7 +25,7 @@ namespace BookBuddyProject2._0
                 return;
             }
 
-            if (!Validations.isMatch(txtPasswordRecoAdmin.Text,txtComPassRecoAdmin.Text))
+            if (!Validations.isEmpty(txtPasswordRecoAdmin.Text,txtComPassRecoAdmin.Text))
             {
                 MessageBox.Show("Passwords do not match.", "Password Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

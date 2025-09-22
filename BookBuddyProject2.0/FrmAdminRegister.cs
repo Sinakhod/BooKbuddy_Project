@@ -46,7 +46,7 @@ namespace BookBuddyProject2._0
             }
 
             //  Password match check
-            if (!Validations.isMatch(txtPasswordAdminReg.Text,txtComPassAdminReg.Text))
+            if (!Validations.IsMatch(txtPasswordAdminReg.Text,txtComPassAdminReg.Text))
             {
                 MessageBox.Show("Passwords do not match.",
                     "Password Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);

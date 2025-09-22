@@ -94,5 +94,10 @@ namespace BookBuddyProject2._0
         {
 
         }
+
+        private void FrmAdminLogin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

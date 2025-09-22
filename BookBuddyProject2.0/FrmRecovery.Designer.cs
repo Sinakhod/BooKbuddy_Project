@@ -53,11 +53,11 @@
             this.button2.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Location = new System.Drawing.Point(441, 417);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(288, 43);
             this.button2.TabIndex = 39;
-            this.button2.Text = "Save Password";
+            this.button2.Text = "Reset Password";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -72,13 +72,13 @@
             this.chkShowPass.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkShowPass.ForeColor = System.Drawing.Color.Black;
             this.chkShowPass.Location = new System.Drawing.Point(577, 367);
-            this.chkShowPass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkShowPass.Margin = new System.Windows.Forms.Padding(4);
             this.chkShowPass.Name = "chkShowPass";
             this.chkShowPass.Size = new System.Drawing.Size(135, 23);
             this.chkShowPass.TabIndex = 37;
             this.chkShowPass.Text = "Show Password ";
             this.chkShowPass.UseVisualStyleBackColor = true;
-            this.chkShowPass.CheckedChanged += new System.EventHandler(this.chkShowPass_CheckedChanged);
+            //this.chkShowPass.CheckedChanged += new System.EventHandler(this.chkShowPass_CheckedChanged);
             // 
             // txtComPass
             // 
@@ -89,7 +89,7 @@
             this.txtComPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtComPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtComPass.Location = new System.Drawing.Point(437, 325);
-            this.txtComPass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtComPass.Margin = new System.Windows.Forms.Padding(4);
             this.txtComPass.Multiline = true;
             this.txtComPass.Name = "txtComPass";
             this.txtComPass.PasswordChar = '•';
@@ -120,7 +120,7 @@
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(437, 251);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Multiline = true;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '•';
@@ -151,7 +151,7 @@
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsername.Location = new System.Drawing.Point(437, 176);
-            this.txtUsername.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsername.Multiline = true;
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(288, 34);
@@ -191,7 +191,7 @@
             // 
             this.pictureBox1.Image = global::BookBuddyProject2._0.Properties.Resources.resize_the_Book_Budd;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(293, 542);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -215,7 +215,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmRecovery";
             this.Text = "FrmRecovery";
             this.Load += new System.EventHandler(this.FrmRecovery_Load);

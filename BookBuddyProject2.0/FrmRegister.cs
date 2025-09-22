@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Drawing.Text;
+using System;
+using System.Data.SqlClient;
 
 namespace BookBuddyProject2._0
 {
@@ -22,49 +24,88 @@ namespace BookBuddyProject2._0
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //  Empty check
-            if (Validations.isEmpty(txtUsernameReg.Text, txtPasswordReg.Text, txtComPassReg.Text))
+            
+        }
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+
+            if (Validations.isEmpty(txtFullNameReg.Text, txtUsernameReg.Text, txtEmailReg.Text, txtPasswordReg.Text, txtComPassReg.Text))
             {
-                MessageBox.Show("Please make sure the required fields are filled",
-                    "Fill in Empty Spaces!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("All fields are required!");
                 return;
             }
 
-            //  Username check
             if (!Validations.isValidUsername(txtUsernameReg.Text))
             {
-                MessageBox.Show("Invalid Username. Username must be 9 digits followed by @mywsu.ac.za.",
-                    "Username Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Username must only contain letters, numbers, _, @ or !");
                 return;
             }
 
-            // Password strength check
+            if (!Validations.IsValidStudentEmail(txtEmailReg.Text))
+            {
+                MessageBox.Show("Email must be in format: 9 digits + @mywsu.ac.za");
+                return;
+            }
+
             if (!Validations.IsValidPassword(txtPasswordReg.Text))
             {
-                MessageBox.Show("Password must be at least 1 characters, include 1 uppercase, 1 number, and 1 special character(!).",
-                    "Password Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Password must have 1 uppercase, 1 number, and 1 special character (!)");
                 return;
             }
 
-            //  Password match check
-            if (!Validations.isMatch(txtPasswordReg.Text, txtComPassReg.Text))
+            if (!Validations.IsMatch(txtPasswordReg.Text, txtComPassReg.Text))
             {
-                MessageBox.Show("Passwords do not match.",
-                    "Password Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Passwords do not match");
                 return;
             }
 
-            //  Success
-            MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
 
-            FrmLogin login = new FrmLogin();
+                // Check if username already exists
+                string checkUser = "SELECT COUNT(*) FROM Users WHERE Username=@Username";
+                using (SqlCommand checkCmd = new SqlCommand(checkUser, conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@Username", txtUsernameReg.Text.Trim());
+                    int count = (int)checkCmd.ExecuteScalar();
+
+                    if (count > 0)
+                    {
+                        MessageBox.Show("Username already exists. Please choose another one.",
+                            "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
 
 
-            UserCredentials.SetCredentials(txtUsernameReg.Text.Trim(), txtPasswordReg.Text.Trim());
+                using (SqlConnection conn2 = DatabaseHelper.GetConnection())
+                {
 
-            login.Show();
-            this.Hide();
+                   
+                    string hashedPassword = PasswordHelper.HashPassword(txtPasswordReg.Text);
+
+                    string query = "INSERT INTO Users (Username, PasswordHash, Email, FullName) " +
+                                   "VALUES (@Username, @PasswordHash, @Email, @FullName)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", txtUsernameReg.Text);
+                        cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
+                        cmd.Parameters.AddWithValue("@Email", txtEmailReg.Text);
+                        cmd.Parameters.AddWithValue("@FullName", txtFullNameReg.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Registration successful!");
+
+                    // Redirect to Login
+                    FrmLogin login = new FrmLogin();
+                    login.Show();
+                    this.Hide();
+                }
+            }
         }
+
 
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
         {
@@ -101,6 +142,16 @@ namespace BookBuddyProject2._0
             txtUsernameReg.Clear();
             txtPasswordReg.Clear();
             txtComPassReg.Clear();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtEmailReg_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

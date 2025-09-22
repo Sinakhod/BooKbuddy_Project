@@ -202,6 +202,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmAdminLogin";
             this.Text = "FrmAdminLogin";
+            this.Load += new System.EventHandler(this.FrmAdminLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
