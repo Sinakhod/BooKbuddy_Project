@@ -164,9 +164,9 @@
             this.label2.Location = new System.Drawing.Point(440, 172);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(187, 19);
+            this.label2.Size = new System.Drawing.Size(76, 19);
             this.label2.TabIndex = 29;
-            this.label2.Text = "Username (@mywsu.ac.za)";
+            this.label2.Text = "Username";
             // 
             // label1
             // 

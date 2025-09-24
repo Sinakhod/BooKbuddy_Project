@@ -31,19 +31,19 @@ namespace BookBuddyProject2._0
 
             if (Validations.isEmpty(txtFullNameReg.Text, txtUsernameReg.Text, txtEmailReg.Text, txtPasswordReg.Text, txtComPassReg.Text))
             {
-                MessageBox.Show("All fields are required!");
+                MessageBox.Show("All fields are required!", "Empty Feild Error!" ,MessageBoxButtons.RetryCancel , MessageBoxIcon.Error);
                 return;
             }
 
             if (!Validations.isValidUsername(txtUsernameReg.Text))
             {
-                MessageBox.Show("Username must only contain letters, numbers, _, @ or !");
+                MessageBox.Show("Username must only contain letters, numbers, _, @ or !" , "Username Invalid" , MessageBoxButtons.RetryCancel , MessageBoxIcon.Error);
                 return;
             }
 
             if (!Validations.IsValidStudentEmail(txtEmailReg.Text))
-            {
-                MessageBox.Show("Email must be in format: 9 digits + @mywsu.ac.za");
+            {       
+                MessageBox.Show("Email must be in format: 9 digits + @mywsu.ac.za", "Email Invalid" , MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 return;
             }
 
@@ -65,6 +65,7 @@ namespace BookBuddyProject2._0
 
                 // Check if username already exists
                 string checkUser = "SELECT COUNT(*) FROM Users WHERE Username=@Username";
+
                 using (SqlCommand checkCmd = new SqlCommand(checkUser, conn))
                 {
                     checkCmd.Parameters.AddWithValue("@Username", txtUsernameReg.Text.Trim());

@@ -81,8 +81,8 @@ namespace BookBuddyProject2._0
                     {
                         MessageBox.Show("You have logged in successfully!", "Successful!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        FrmAdminHomePage adminHomePage = new FrmAdminHomePage();
-                        adminHomePage.Show();
+                        FrmHomePage homePage = new FrmHomePage();
+                        homePage.Show();
                         this.Hide();
                     }
                     else
